@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# ytTV
+
+# Version 2.0 - 220926@461
+
+# Uses a YouTube downloading program (yt-dlp by default) to download YouTube 
+# (and other streaming services) content and convert it for watching offline.
+
+# Prerequisites 
+# yt-dlp : https://github.com/yt-dlp/yt-dlp
+
+# Usage
+# ytRadio [URL] 
+# URL (Optional) - URL of Video / Playlist / Channel 
+
+# Error Codes
+# 1 - dl_folder does not point to a extant folder, if this is pointing to a connected
+#     device or remote drive, please check the connection
+
+echo "🟢 ytTV 🟢"
+echo "CAMcLeod"
+echo "2.0 - 220926@461"
+echo " "
+
+
+# 🔧 System Vars
+
+# Default_URL       The URL the script will use when a URL is not given
+# Default_Name      Pretty name for the URL
+default_url="https://www.youtube.com/playlist?list=PLJEz0DSxmyr5oX6RQRJ827ktiUqtC53cu"
+default_name="ytTV Playlist"
+
+# DL Folder     Download folder path. If the path is non-existent (ie: you haven't 
+#               connected the external drive before you run the script) the script 
+#               will ‼️Exit Out‼️ of the script with an error 1
+
+#dl_folder="/Users/craigmcleod/Downloads/ytTV"
+dl_folder="/Volumes/DG_FinFunnel/ytTV"
+
+# 👉 Default to playlist if there's no arguments
+if [ $# -eq 0 ]; then
+    echo "❗ No arguments given, defaulting to $default_name"
+    url=$default_url
+else
+    echo "Downloading $url"
+    url=$1
+fi
+
+# 👉 Go To DL Folder
+# ‼️Exit Out‼️ if dl_folder doesn't exist
+if [ -d $dl_folder ]; then 
+    echo "📂 Moving To $dl_folder"
+    cd $dl_folder
+else
+    echo "‼️ Folder not found!"
+    echo "👎 Done."
+    exit 1
+fi
+
+# 👉 Download File(s)
+echo "Now Downloading Files(s)"
+echo " "
+yt-dlp -f "bv*[height<=1080][fps<=60]+ba" --no-write-auto-subs --sub-langs "en,nl" --embed-subs --merge-output-format "mkv" -o "%(uploader)s - %(upload_date)s_%(title)s.%(ext)s" $url
+echo " "
+
+# 👉 Open the DL Folder in Finder
+echo "📂 Opening Finder"
+open .
+
+#‼️Exit Out‼️ of the script gracefully.
+echo "👍 Done!"

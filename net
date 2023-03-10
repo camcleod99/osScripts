@@ -1,0 +1,13 @@
+#!/bin/bash
+
+file="$HOME/Library/Mobile Documents/com~apple~CloudDocs/bookmarks.txt"
+website=$(cat "$file" | fzf --reverse)
+browser="safari"
+
+url=$(echo "$website" | sed 's/#.*//' | sed 's/\s//')
+
+if [ -z "$url" ]; then
+	terminal-notifier -title 'net.sh - Tada!' -message "You have not selected a website!"
+else	
+	open -a $browser $url
+fi

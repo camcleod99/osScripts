@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# ytRdaio
+
+# Version 3.0 - 220925@355
+
+# Uses a YouTube downloading program (yt-dlp by default) to download YouTube 
+# (and other streaming services) content and convert it for listening offline.
+
+# Prerequisites 
+# yt-dlp : https://github.com/yt-dlp/yt-dlp
+# You may use an alternative to yt-dlp but please be aware the argument string
+# may not work in that instance
+
+# Usage
+# ytRadio [URL] 
+# URL (Optional) - URL of Video / Playlist / Channel 
+
+# Error Codes
+# 1 - dl_folder does not point to a extant folder, if this is pointing to a connected
+#     device or remote drive, please check the connection
+
+echo "🟢 ytRadio 🟢"
+echo "CAMcLeod"
+echo "3.0 - 220925@355"
+echo " "
+
+# 🔧 System Vars
+
+# Default_URL       The URL the script will use when a URL is not given
+# Default_Name      Pretty name for the URL
+# Player            URL for PocketCasts Files which will open in Safari
+
+default_url="https://www.youtube.com/playlist?list=PLJEz0DSxmyr52Ry-4SiZwLqkxOcmSHFL1"
+default_name="ytRadio Playlist"
+player_url="https://play.pocketcasts.com/uploaded-files"
+
+# DL Folder     Download folder path. If the path is non-existent (ie: you haven't 
+#               connected the external drive before you run the script) the script 
+#               will ‼️Exit Out‼️ of the script with an error 1
+
+# dl_folder="/Users/craigmcleod/Downloads/ytRadio"
+dl_folder="/Volumes/DG_FinFunnel/ytRadio"
+
+# 👉 Default to playlist if there's no arguments
+if [ $# -eq 0 ]; then
+    echo "❗ No arguments given, defaulting to $default_name"
+    url=$default_url
+else
+    url=$1
+fi
+
+# 👉 Go To DL Folder
+# ‼️ExitOut‼️ if dl_folder doesn't exist
+if [ -d $dl_folder ]; then 
+    echo "📂 Moving To $dl_folder"
+    cd $dl_folder
+else
+    echo "‼️ Folder not found!"
+    echo "👎 Done."
+    exit 1
+fi
+
+# 👉 Download File(s)
+echo "⬇️ Downloading $url ..."
+echo " "
+yt-dlp -x --audio-format mp3 --write-description -o "%(uploader)s - %(upload_date)s_%(title)s.%(ext)s" $url
+echo " "
+
+#‼️Exit Out‼️ of the script gracefully.
+echo "👍 Done!"

@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# pinGrab
+
+# Version 2.0 - 220926@461
+
+# Saves a pintrest pin to a folder (./images)
+
+# Prerequisites 
+# pinterest-downloader : https://github.com/yt-dlp/yt-dlp
+
+# Usage
+# pinGrab [URL] 
+# URL (required) - URL of Pin / User / Board 
+
+# Error Codes
+# 1 - dl_folder does not point to a extant folder, if this is pointing to a connected
+#     device or remote drive, please check the connection
+
+echo "🟢 pinGrab 🟢"
+echo "CAMcLeod"
+echo "0.0.1 - 230202@669"
+echo " "
+
+
+# 🔧 System Vars
+
+# DL Folder     Download folder path. This will also be where pintrest-downloader will be
+#               If the path is non-existent (ie: you haven't 
+#               connected the external drive before you run the script) the script 
+#               will ‼️Exit Out‼️ of the script with an error 1
+
+dl_folder="/Volumes/DG_FinFunnel/pinterest-downloader-master"
+
+# 👉 Default to playlist if there's no arguments
+if [ $# -eq 0 ]; then
+    echo "‼️ No Arguments Given!"
+    echo "👎 Done."
+    exit 1
+else
+    echo "Downloading $url"
+    url=$1
+fi
+
+# 👉 Go To DL Folder
+# ‼️Exit Out‼️ if dl_folder doesn't exist
+if [ -d $dl_folder ]; then 
+    echo "📂 Moving To $dl_folder"
+    cd $dl_folder
+else
+    echo "‼️ Folder not found!"
+    echo "👎 Done."
+    exit 1
+fi
+
+# 👉 Download File(s)
+echo "Now Downloading Files(s)"
+echo " "
+python3 ./pinterest-downloader.py $url
+echo " "
+
+#‼️Exit Out‼️ of the script gracefully.
+echo "👍 Done!"

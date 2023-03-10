@@ -1,0 +1,12 @@
+#!/bin/bash
+
+shortcuts run Filestamp
+
+timeStamp=$(pbpaste)
+
+cp ./templates/micro.md ./_micros/$(pbpaste).md
+
+sed -i '' "s/XYZZY/$timeStamp/g" ./_micros/$(pbpaste).md
+
+subl ./_micros/$(pbpaste).md
+

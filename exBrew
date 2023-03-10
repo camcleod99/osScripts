@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Move To Configs Folder
+cd ~/Configs
+
+# Clear brew_export
+rm brew_export.txt
+
+# Echo casks to brew_export
+echo "--Casks" >> brew_export.txt
+brew list --casks >> brew_export.txt
+
+# Echo High exports to brew_export
+echo "--Leaves" >> brew_export.txt
+brew leaves >> brew_export.txt
+
+echo "exBrew Done!"
