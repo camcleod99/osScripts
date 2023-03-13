@@ -1,0 +1,13 @@
+#!/bin/bash
+#Snip - Snippet Surfer
+
+file="$HOME/Configs/snippets.txt"
+selection=$(cat "$file" | fzf --reverse)
+
+if [ -z "$selection" ]; then
+	terminal-notifier -title 'Snip - Geep!' -message "You have not selected a snippet!"
+else	
+	output=$(echo "$selection" | sed -e 's/#.* //')
+	echo $output
+	echo $output | pbcopy
+fi

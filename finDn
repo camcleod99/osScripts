@@ -1,0 +1,5 @@
+#!/bin/bash
+#FinDn - ejects FinFunnel
+
+driveLabel="DG_FinFunnel"
+diskutil eject $driveLabel

@@ -1,0 +1,13 @@
+#!/bin/bash
+#Bookie Add
+
+bookmark="$(pbpaste)"
+file="$HOME/Configs/bookmarks.txt"
+
+if grep -q "^$bookmark$" "$file"; then
+	terminal-notifier -title 'Bookie Add - Geep!' -message 'You already bookmarked this!'
+else
+	echo " " >> "$file"
+	echo $bookmark >> "$file"
+	terminal-notifier -title 'Bookie Add - Tada!' -message $bookmark+=' bookmarked'
+fi

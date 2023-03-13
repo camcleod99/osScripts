@@ -3,15 +3,14 @@
 # Move To Configs Folder
 cd ~/Configs
 
-# Clear brew_export
-rm brew_export.txt
+# Export Brew List
+brew bundle dump
 
-# Echo casks to brew_export
-echo "--Casks" >> brew_export.txt
-brew list --casks >> brew_export.txt
+# Run Shortcut to get timestamp
+shortcuts run "FileStamp"
 
-# Echo High exports to brew_export
-echo "--Leaves" >> brew_export.txt
-brew leaves >> brew_export.txt
+# Open Configs for labeling
+mv Brewfile "BrewFile_$(pbpaste)"
 
-echo "exBrew Done!"
+# DEBUG: Open to Confirm All's Goed
+open .

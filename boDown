@@ -1,0 +1,8 @@
+#!/bin/bash
+#Bookie Download
+#Downloads Bookmark List from Github Gist
+
+cd "$HOME/Library/Mobile Documents/com~apple~CloudDocs"
+rm bookmarks.txt
+git clone git@gist.github.com:74e7a76bf3e1743520c9a3d58287a7bf.git
+cp ./74e7a76bf3e1743520c9a3d58287a7bf/gistfile1.txt ./bookmarks.txt
