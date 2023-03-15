@@ -1,5 +1,5 @@
 #!/bin/bash
-#Bookie Download
+#Surf Bookmark Download
 #Downloads Bookmark List from Github Gist
 
 cd "$HOME/Library/Mobile Documents/com~apple~CloudDocs"

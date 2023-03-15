@@ -1,0 +1,50 @@
+#!/bin/bash
+#Surf - CLI Web Browser Control
+
+browser="safari"
+if [ "$1" = "h" ] || [ "$1" = "H" ]; then
+	#H - Help
+	echo "=============================="
+	echo "Surf"
+	echo "CLI Web Browser Control"
+	echo "=============================="
+	echo "No Argument - Open Bookmark"
+	echo "Select Bookmark in bookmarks (~/Configs/bookmarks.txt) via FZF"
+	echo "------------------------------"
+	echo "Add - Add to Bookmark"
+	echo "Adds text in bookmarks (~/Configs/bookmarks.txt)"
+	echo "------------------------------"
+	echo "H - Help"	
+	echo "This help screen"	
+	echo "------------------------------"
+	echo "All other arguments - URL"
+	echo "Opens the browser to the given URL"
+	echo "Opens the browser to the given URL"
+	echo "Requires full URL - ie 'https://www.google.com' "
+	echo "=============================="
+	exit 0
+fi
+
+if [ "$1" = "add" ] || [ "$1" = "Add" ]; then
+	#Add - Add to Bookmark
+	surfAdd
+	exit 0
+fi
+
+if [ ! -z "$1" ]; then
+	#All other Arguments - URL
+	open -a $browser $1
+	exit 0
+else
+	#No Argument - Open Bookmark
+	file="$HOME/Configs/bookmarks.txt"
+	website=$(cat "$file" | fzf --reverse)
+	url=$(echo "$website" | sed 's/#.*//' | sed 's/\s//')
+
+	if [ -z "$url" ]; then
+		echo "Geep! - You have not selected a website!"
+		terminal-notifier -title 'Surf - Geep!' -message "You have not selected a website!"
+	else	
+		open -a $browser $url
+	fi
+fi
